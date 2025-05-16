@@ -43,41 +43,26 @@ class PerformanceEvaluation extends Model
     public const LEVEL_NEEDS_IMPROVEMENT = 'needs_improvement';
     public const LEVEL_POOR = 'poor';
 
-    /**
-     * Get the employee being evaluated.
-     */
     public function employee()
     {
         return $this->belongsTo(EmployeeProfile::class, 'employee_id');
     }
 
-    /**
-     * Get the user who performed the evaluation.
-     */
     public function evaluator()
     {
         return $this->belongsTo(User::class, 'evaluator_id');
     }
 
-    /**
-     * Get the period of the evaluation.
-     */
     public function period()
     {
         return $this->belongsTo(EvaluationPeriod::class, 'period_id');
     }
 
-    /**
-     * Get the criteria scores for this evaluation.
-     */
     public function criteriaScores()
     {
         return $this->hasMany(CriteriaScore::class, 'evaluation_id');
     }
 
-    /**
-     * Calculate and update the final score.
-     */
     public function calculateFinalScore()
     {
         $totalScore = 0;
@@ -100,9 +85,6 @@ class PerformanceEvaluation extends Model
         return $finalScore;
     }
 
-    /**
-     * Calculate performance level based on final score.
-     */
     public function calculatePerformanceLevel($score)
     {
         if ($score >= 90) {
@@ -118,9 +100,6 @@ class PerformanceEvaluation extends Model
         }
     }
 
-    /**
-     * Finalize the evaluation.
-     */
     public function finalize()
     {
         $this->calculateFinalScore();

@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\DepartmentResource\Pages;
-use App\Filament\Resources\DepartmentResource\RelationManagers;
-use App\Models\Department;
+use App\Filament\Resources\EvaluationPeriodResource\Pages;
+use App\Filament\Resources\EvaluationPeriodResource\RelationManagers;
+use App\Models\EvaluationPeriod;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,11 +13,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class DepartmentResource extends Resource
+class EvaluationPeriodResource extends Resource
 {
-    protected static ?string $model = Department::class;
+    protected static ?string $model = EvaluationPeriod::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+    protected static ?string $navigationIcon = 'heroicon-o-calendar-date-range';
 
     public static function form(Form $form): Form
     {
@@ -26,11 +26,12 @@ class DepartmentResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('code')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull(),
+                Forms\Components\DatePicker::make('start_date')
+                    ->required(),
+                Forms\Components\DatePicker::make('end_date')
+                    ->required(),
+                Forms\Components\TextInput::make('status')
+                    ->required(),
             ]);
     }
 
@@ -40,8 +41,13 @@ class DepartmentResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('code')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('start_date')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('end_date')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -74,9 +80,9 @@ class DepartmentResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDepartments::route('/'),
-            'create' => Pages\CreateDepartment::route('/create'),
-            'edit' => Pages\EditDepartment::route('/{record}/edit'),
+            'index' => Pages\ListEvaluationPeriods::route('/'),
+            'create' => Pages\CreateEvaluationPeriod::route('/create'),
+            'edit' => Pages\EditEvaluationPeriod::route('/{record}/edit'),
         ];
     }
 }

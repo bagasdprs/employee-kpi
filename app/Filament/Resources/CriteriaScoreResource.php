@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\DepartmentResource\Pages;
-use App\Filament\Resources\DepartmentResource\RelationManagers;
-use App\Models\Department;
+use App\Filament\Resources\CriteriaScoreResource\Pages;
+use App\Filament\Resources\CriteriaScoreResource\RelationManagers;
+use App\Models\CriteriaScore;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,23 +13,26 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class DepartmentResource extends Resource
+class CriteriaScoreResource extends Resource
 {
-    protected static ?string $model = Department::class;
+    protected static ?string $model = CriteriaScore::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+    protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-bar';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('evaluation_id')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('code')
+                    ->numeric(),
+                Forms\Components\TextInput::make('criteria_id')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
+                    ->numeric(),
+                Forms\Components\TextInput::make('score')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\Textarea::make('comment')
                     ->columnSpanFull(),
             ]);
     }
@@ -38,10 +41,15 @@ class DepartmentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('code')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('evaluation_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('criteria_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('score')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -74,9 +82,9 @@ class DepartmentResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDepartments::route('/'),
-            'create' => Pages\CreateDepartment::route('/create'),
-            'edit' => Pages\EditDepartment::route('/{record}/edit'),
+            'index' => Pages\ListCriteriaScores::route('/'),
+            'create' => Pages\CreateCriteriaScore::route('/create'),
+            'edit' => Pages\EditCriteriaScore::route('/{record}/edit'),
         ];
     }
 }

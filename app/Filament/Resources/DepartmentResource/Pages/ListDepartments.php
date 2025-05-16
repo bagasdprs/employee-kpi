@@ -4,7 +4,6 @@ namespace App\Filament\Resources\DepartmentResource\Pages;
 
 use App\Filament\Resources\DepartmentResource;
 use Filament\Actions;
-use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListDepartments extends ListRecords

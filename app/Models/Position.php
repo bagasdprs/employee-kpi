@@ -26,4 +26,9 @@ class Position extends Model
     {
         return $this->hasMany(EmployeeProfile::class);
     }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 }

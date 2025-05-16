@@ -11,11 +11,17 @@ class Department extends Model
 
     protected $fillable = [
         'name',
+        'code',
         'description'
     ];
 
     public function employees()
     {
         return $this->hasMany(EmployeeProfile::class);
+    }
+
+    public function positions()
+    {
+        return $this->hasMany(Position::class);
     }
 }

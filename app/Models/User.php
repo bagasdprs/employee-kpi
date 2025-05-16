@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Role;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -49,6 +50,14 @@ class User extends Authenticatable
     public const ROLE_ADMIN_HR = 'admin_hr';
     public const ROLE_DIVISION_HEAD = 'division_head';
     public const ROLE_EMPLOYEE = 'employee';
+
+    /**
+     * Get the role associated with the user.
+     */
+    // public function role()
+    // {
+    //     return $this->belongsTo(Role::class);
+    // }
 
     /**
      * Get the employee profile associated with the user.
